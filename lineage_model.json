@@ -1,0 +1,158 @@
+{
+  "nodes": [
+    {
+      "id": "orders",
+      "name": "orders_raw",
+      "operation": "Read source",
+      "columns": [
+        "order_id",
+        "customer_id",
+        "quantity",
+        "unit_price"
+      ]
+    },
+    {
+      "id": "customers",
+      "name": "customers_raw",
+      "operation": "Read reference",
+      "columns": [
+        "customer_id",
+        "region"
+      ]
+    },
+    {
+      "id": "clean",
+      "name": "orders_clean",
+      "operation": "Filter quantity > 0",
+      "columns": [
+        "order_id",
+        "customer_id",
+        "quantity",
+        "unit_price"
+      ]
+    },
+    {
+      "id": "enriched",
+      "name": "orders_enriched",
+      "operation": "Left join on customer_id",
+      "columns": [
+        "order_id",
+        "customer_id",
+        "quantity",
+        "unit_price",
+        "region"
+      ]
+    },
+    {
+      "id": "calculated",
+      "name": "orders_calculated",
+      "operation": "revenue = quantity \u00d7 unit_price",
+      "columns": [
+        "order_id",
+        "region",
+        "revenue"
+      ]
+    },
+    {
+      "id": "summary",
+      "name": "sales_by_region",
+      "operation": "Group by region; sum revenue",
+      "columns": [
+        "region",
+        "total_revenue"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "orders.order_id",
+      "to": "clean.order_id",
+      "kind": "value"
+    },
+    {
+      "from": "clean.order_id",
+      "to": "enriched.order_id",
+      "kind": "value"
+    },
+    {
+      "from": "orders.customer_id",
+      "to": "clean.customer_id",
+      "kind": "value"
+    },
+    {
+      "from": "clean.customer_id",
+      "to": "enriched.customer_id",
+      "kind": "value"
+    },
+    {
+      "from": "orders.quantity",
+      "to": "clean.quantity",
+      "kind": "value"
+    },
+    {
+      "from": "clean.quantity",
+      "to": "enriched.quantity",
+      "kind": "value"
+    },
+    {
+      "from": "orders.unit_price",
+      "to": "clean.unit_price",
+      "kind": "value"
+    },
+    {
+      "from": "clean.unit_price",
+      "to": "enriched.unit_price",
+      "kind": "value"
+    },
+    {
+      "from": "customers.region",
+      "to": "enriched.region",
+      "kind": "value"
+    },
+    {
+      "from": "enriched.order_id",
+      "to": "calculated.order_id",
+      "kind": "value"
+    },
+    {
+      "from": "enriched.region",
+      "to": "calculated.region",
+      "kind": "value"
+    },
+    {
+      "from": "enriched.quantity",
+      "to": "calculated.revenue",
+      "kind": "value"
+    },
+    {
+      "from": "enriched.unit_price",
+      "to": "calculated.revenue",
+      "kind": "value"
+    },
+    {
+      "from": "calculated.region",
+      "to": "summary.region",
+      "kind": "value"
+    },
+    {
+      "from": "calculated.revenue",
+      "to": "summary.total_revenue",
+      "kind": "value"
+    },
+    {
+      "from": "customers.customer_id",
+      "to": "enriched.region",
+      "kind": "control"
+    },
+    {
+      "from": "clean.customer_id",
+      "to": "enriched.region",
+      "kind": "control"
+    },
+    {
+      "from": "calculated.region",
+      "to": "summary.total_revenue",
+      "kind": "control"
+    }
+  ]
+}
