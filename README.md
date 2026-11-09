@@ -8,6 +8,8 @@ Click a column to highlight its upstream ancestors and downstream descendants, i
 
 [Open the live Explorer](https://linyuli303.github.io/ColumnLineageExplorer/)
 
+https://github.com/user-attachments/assets/9d42f6ca-112a-42c4-bdcc-eb55b94437c9
+
 Suggested walkthrough:
 1. Select `orders_calculated.revenue`: trace quantity and unit price back to source, and revenue forward to the aggregate.
 2. Select `orders_raw.quantity`: inspect its route through cleaning, enrichment, calculation, and aggregation.
