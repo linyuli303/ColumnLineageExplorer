@@ -6,7 +6,7 @@ Click a column to highlight its upstream ancestors and downstream descendants, i
 
 ## Try it
 
-Open `index.html` in a modern browser. No installation, Python, CDN, or network connection is required.
+[Open the live Explorer](https://linyuli303.github.io/ColumnLineageExplorer/)
 
 Suggested walkthrough:
 1. Select `orders_calculated.revenue`: trace quantity and unit price back to source, and revenue forward to the aggregate.
@@ -22,13 +22,3 @@ This is **explicit, curated lineage**, not an automatic parser for arbitrary Pyt
 
 - `index.html`: self-contained interactive diagram, including the embedded model.
 - `lineage_model.json`: readable copy of the model for reference.
-
-The HTML uses its embedded model so it can open directly from disk. Editing the JSON alone does not update the HTML; update the `MODEL` constant as well.
-
-## GitHub Pages
-
-Publish `main` from `/ (root)` in Settings → Pages. The landing file is `index.html`.
-
-## Privacy and license
-
-No real files, usernames, employee records, or organizational paths are included. No license has been chosen; select one before describing this project as licensed open source.
